@@ -2,6 +2,7 @@ import { EventResponse, EventType, getByTypes } from "@/api/event"
 import { acceptFriendRequest, cancelFriendRequest, getPendingFriendRequests, getSentFriendRequests } from "@/api/user"
 import { ThemedView } from "@/components/ThemedView"
 import { IconSymbol } from "@/components/ui/IconSymbol"
+import { Colors } from "@/constants/Colors"
 import { useGetToken } from "@/hooks/useGetToken"
 import { useLocation } from "@/hooks/useLocation"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
@@ -12,9 +13,11 @@ import { useState } from "react"
 import { ActivityIndicator, Dimensions, Image, Platform, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import MapView, { Callout, Marker } from "react-native-maps"
 import Modal from "react-native-modal"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 import { Toast } from "toastify-react-native"
 
 export default function HomeScreen() {
+    const insets = useSafeAreaInsets()
     const [isModalVisible, setIsModalVisible] = useState(false)
     const [selectedEvent, setSelectedEvent] = useState<EventResponse | null>(null)
     const [isEventModalVisible, setIsEventModalVisible] = useState(false)
@@ -94,26 +97,26 @@ export default function HomeScreen() {
     }
 
     return (
-        <ThemedView style={styles.container}>
-            <View style={styles.headerContainer}>
+        <ThemedView style={[styles.container, { paddingTop: insets.top }]}>
+            <View style={[styles.headerContainer, { top: insets.top + 16 }]}>
                 <BlurView style={styles.header} intensity={75} tint="light">
                     <TouchableOpacity onPress={handleNotificationPress}>
-                        <IconSymbol name="envelope" size={24} color="black" />
+                        <IconSymbol name="envelope" size={24} color={Colors.light.text} />
                     </TouchableOpacity>
                 </BlurView>
                 <BlurView style={styles.header} intensity={75} tint="light">
                     <TouchableOpacity onPress={handleTypePress}>
-                        <IconSymbol name="list.bullet.rectangle" size={24} color="black" />
+                        <IconSymbol name="list.bullet.rectangle" size={24} color={Colors.light.text} />
                     </TouchableOpacity>
                 </BlurView>
             </View>
             <MapView
                 style={styles.map}
                 initialRegion={{
-                    latitude: location?.latitude || lastLocationStored?.latitude || 0,
-                    longitude: location?.longitude || lastLocationStored?.longitude || 0,
-                    latitudeDelta: 0.0922,
-                    longitudeDelta: 0.0421,
+                    latitude: 48.8566,
+                    longitude: 2.3522,
+                    latitudeDelta: 0.12,
+                    longitudeDelta: 0.08,
                 }}
                 showsUserLocation={true}
                 showsMyLocationButton={true}
@@ -208,7 +211,7 @@ export default function HomeScreen() {
                         <TouchableOpacity onPress={() => setTypes(Object.values(EventType))} style={[styles.modalButton, { backgroundColor: "#eee", flex: 1 }]}>
                             <Text style={{ color: "black" }}>Réinitialiser</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={applyFilters} style={[styles.modalButton, { backgroundColor: "#1487ea", flex: 1 }]}>
+                        <TouchableOpacity onPress={applyFilters} style={[styles.modalButton, { backgroundColor: "#00C896", flex: 1 }]}>
                             <Text style={{ color: "white" }}>Appliquer</Text>
                         </TouchableOpacity>
                     </View>
@@ -230,7 +233,7 @@ export default function HomeScreen() {
                                         setIsEventModalVisible(false)
                                         router.push(`/event/${selectedEvent.id}`)
                                     }}
-                                    style={[styles.modalButton, { backgroundColor: "#1487ea", flex: 1 }]}
+                                    style={[styles.modalButton, { backgroundColor: "#00C896", flex: 1 }]}
                                 >
                                     <Text style={{ color: "white" }}>Voir détails</Text>
                                 </TouchableOpacity>
@@ -251,8 +254,7 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         gap: 10,
         position: "absolute",
-        top: 48,
-        right: 16,
+        left: 16,
         zIndex: 1,
     },
     header: {
@@ -260,6 +262,7 @@ const styles = StyleSheet.create({
         zIndex: 1,
         borderRadius: 50,
         overflow: "hidden",
+        backgroundColor: Colors.light.background,
     },
     map: {
         width: Dimensions.get("window").width,
@@ -271,8 +274,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     coverImage: {
-        width: 200,
-        height: 100,
+        width: "100%",
+        height: 200,
         resizeMode: "cover",
         borderRadius: 16,
         alignSelf: "center",

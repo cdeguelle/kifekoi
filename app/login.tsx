@@ -50,7 +50,8 @@ export default function LoginScreen() {
         <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} style={styles.container}>
             <View style={styles.content}>
                 <Image source={require("@/assets/images/kifekoi_logo.png")} style={styles.logo} />
-                <Text style={styles.title}>Bienvenue</Text>
+                <Text style={styles.title}>Bienvenue 👋</Text>
+                <Text style={styles.subtitle}>Connecte-toi pour voir les événements</Text>
 
                 <View style={styles.form}>
                     <Controller
@@ -98,51 +99,67 @@ export default function LoginScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#fff",
+        backgroundColor: "#F0FBF8",
     },
     content: {
         flex: 1,
-        padding: 20,
+        padding: 24,
         justifyContent: "center",
         alignItems: "center",
     },
     logo: {
-        width: 100,
-        height: 100,
-        marginBottom: 20,
+        width: 110,
+        height: 110,
+        marginBottom: 12,
     },
     title: {
-        fontSize: 28,
-        fontWeight: "bold",
-        marginBottom: 30,
-        color: "#333",
+        fontSize: 30,
+        fontWeight: "800",
+        marginBottom: 8,
+        color: "#1A2E2A",
+        letterSpacing: -0.5,
+    },
+    subtitle: {
+        fontSize: 15,
+        color: "#6B8F87",
+        marginBottom: 32,
     },
     form: {
         width: "100%",
         maxWidth: 400,
+        backgroundColor: "#fff",
+        borderRadius: 20,
+        padding: 20,
+        shadowColor: "#00C896",
+        shadowOffset: { width: 0, height: 6 },
+        shadowOpacity: 0.1,
+        shadowRadius: 16,
+        elevation: 5,
     },
     button: {
-        backgroundColor: "#007AFF",
-        padding: 15,
-        borderRadius: 10,
+        backgroundColor: "#00C896",
+        padding: 16,
+        borderRadius: 14,
         alignItems: "center",
-        marginTop: 10,
+        marginTop: 8,
     },
     buttonDisabled: {
-        backgroundColor: "#A0A0A0",
+        backgroundColor: "#A0C9BF",
     },
     buttonText: {
         color: "#fff",
-        fontSize: 18,
-        fontWeight: "600",
+        fontSize: 17,
+        fontWeight: "700",
+        letterSpacing: 0.3,
     },
     forgotPassword: {
-        marginTop: 15,
+        marginTop: 20,
         alignItems: "center",
-        gap: 16,
+        gap: 12,
     },
     forgotPasswordText: {
-        color: "#007AFF",
-        fontSize: 16,
+        color: "#00A87A",
+        fontSize: 15,
+        fontWeight: "500",
     },
 })

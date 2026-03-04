@@ -2,6 +2,7 @@ import { addReaction, getConversationByUserId, PrivateMessage, pushMessage, upda
 import { MessageReaction, MessageReactionType } from "@/api/message"
 import CustomInput from "@/components/ui/CustomInput"
 import { IconSymbol } from "@/components/ui/IconSymbol"
+import { Colors } from "@/constants/Colors"
 import { useGetToken } from "@/hooks/useGetToken"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useState } from "react"
@@ -69,7 +70,7 @@ export default function ChatUser({ id }: { id: string }) {
                 </Text>
                 <View style={styles.messagesContainer}>
                     {conversationLoading ? (
-                        <ActivityIndicator size="small" color="#0000ff" />
+                        <ActivityIndicator size="small" color={Colors.primary} />
                     ) : conversation?.privateMessages && conversation?.privateMessages.length > 0 ? (
                         conversation?.privateMessages
                             ?.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
@@ -145,7 +146,7 @@ export default function ChatUser({ id }: { id: string }) {
             <CustomInput
                 iconRight={
                     <TouchableOpacity onPress={() => pushMessageMutation.mutate(conversation?.id!)}>
-                        <IconSymbol name="paperplane" size={24} color="#0000ff" />
+                        <IconSymbol name="paperplane" size={24} color={Colors.primary} />
                     </TouchableOpacity>
                 }
                 placeholder="Écrivez votre message"
@@ -162,7 +163,7 @@ export default function ChatUser({ id }: { id: string }) {
                         onChangeText={(text) => setUpdatingMessage({ ...updatingMessage!, content: text })}
                         iconRight={
                             <TouchableOpacity onPress={() => updateMessageMutation.mutate(updatingMessage!)}>
-                                <IconSymbol name="paperplane" size={24} color="#0000ff" />
+                                <IconSymbol name="paperplane" size={24} color={Colors.primary} />
                             </TouchableOpacity>
                         }
                     />
@@ -217,7 +218,7 @@ const styles = StyleSheet.create({
     sectionTitle: {
         fontSize: 18,
         fontWeight: "bold",
-        marginBottom: 12,
+        marginVertical: 20,
     },
     messageInputContainer: {
         backgroundColor: "#f5f5f5",

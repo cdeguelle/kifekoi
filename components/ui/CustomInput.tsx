@@ -32,12 +32,13 @@ const styles = StyleSheet.create({
         position: "relative",
     },
     input: {
-        backgroundColor: "#f5f5f5",
+        backgroundColor: "#fff",
         padding: 15,
-        borderRadius: 10,
+        borderRadius: 12,
         fontSize: 16,
-        borderWidth: 1,
-        borderColor: "transparent",
+        borderWidth: 1.5,
+        borderColor: "#C8EDE4",
+        color: "#1A2E2A",
     },
     inputError: {
         borderColor: "#FF3B30",
@@ -45,20 +46,20 @@ const styles = StyleSheet.create({
     },
     errorText: {
         color: "#FF3B30",
-        fontSize: 14,
+        fontSize: 13,
         marginTop: 5,
         marginLeft: 5,
     },
     iconLeft: {
         position: "absolute",
-        left: 10,
-        top: 12,
+        left: 12,
+        top: 14,
         zIndex: 1,
     },
     iconRight: {
         position: "absolute",
-        right: 10,
-        top: 12,
+        right: 12,
+        top: 14,
         zIndex: 1,
     },
 })

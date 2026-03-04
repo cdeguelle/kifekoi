@@ -36,7 +36,7 @@ export default function RootLayout() {
                             <Stack.Screen name="modal" options={{ presentation: "modal" }} />
                             <Stack.Screen name="bug-report" />
                         </Stack>
-                        <StatusBar style="auto" />
+                        <StatusBar style="dark" />
                     </ThemeProvider>
                 </CountryModalProvider>
             </QueryClientProvider>

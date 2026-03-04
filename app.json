@@ -1,62 +1,62 @@
 {
-  "expo": {
-    "name": "kifekoi",
-    "slug": "kifekoi",
-    "version": "1.2.0",
-    "orientation": "portrait",
-    "icon": "./assets/images/kifekoi_logo.png",
-    "scheme": "kifekoi",
-    "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.climent.kifekoi",
-      "infoPlist": {
-        "NSPhotoLibraryUsageDescription": "We need access to your photos to let you share them with your friends.",
-        "NSCameraUsageDescription": "We need access to your camera to let you share them with your friends.",
-        "NSLocationWhenInUseUsageDescription": "We need access to your location to let you share them with your friends.",
-        "NSLocationAlwaysAndWhenInUseUsageDescription": "We need access to your location to let you share them with your friends.",
-        "NSLocationAlwaysUsageDescription": "We need access to your location to let you share them with your friends."
-      }
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/images/kifekoi_logo.png",
-        "backgroundColor": "#ffffff"
-      },
-      "edgeToEdgeEnabled": true,
-      "permissions": [
-        "android.permission.ACCESS_FINE_LOCATION",
-        "android.permission.ACCESS_COARSE_LOCATION",
-        "android.permission.READ_MEDIA_IMAGES",
-        "android.permission.CAMERA",
-        "android.permission.ACCESS_FINE_LOCATION",
-        "android.permission.ACCESS_COARSE_LOCATION",
-        "android.permission.READ_MEDIA_IMAGES",
-        "android.permission.CAMERA"
-      ],
-      "package": "com.climent.kifekoi"
-    },
-    "web": {
-      "bundler": "metro",
-      "output": "static",
-      "favicon": "./assets/images/kifekoi_logo.png"
-    },
-    "plugins": [
-      "expo-router",
-      [
-        "expo-splash-screen",
-        {
-          "image": "./assets/images/kifekoi_logo.png",
-          "imageWidth": 200,
-          "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+    "expo": {
+        "name": "kifekoi",
+        "slug": "kifekoi",
+        "version": "1.2.0",
+        "orientation": "portrait",
+        "icon": "./assets/images/kifekoi_logo.png",
+        "scheme": "kifekoi",
+        "userInterfaceStyle": "light",
+        "newArchEnabled": true,
+        "ios": {
+            "supportsTablet": true,
+            "bundleIdentifier": "com.climent.kifekoi",
+            "infoPlist": {
+                "NSPhotoLibraryUsageDescription": "We need access to your photos to let you share them with your friends.",
+                "NSCameraUsageDescription": "We need access to your camera to let you share them with your friends.",
+                "NSLocationWhenInUseUsageDescription": "We need access to your location to let you share them with your friends.",
+                "NSLocationAlwaysAndWhenInUseUsageDescription": "We need access to your location to let you share them with your friends.",
+                "NSLocationAlwaysUsageDescription": "We need access to your location to let you share them with your friends."
+            }
+        },
+        "android": {
+            "adaptiveIcon": {
+                "foregroundImage": "./assets/images/kifekoi_logo.png",
+                "backgroundColor": "#ffffff"
+            },
+            "edgeToEdgeEnabled": true,
+            "permissions": [
+                "android.permission.ACCESS_FINE_LOCATION",
+                "android.permission.ACCESS_COARSE_LOCATION",
+                "android.permission.READ_MEDIA_IMAGES",
+                "android.permission.CAMERA",
+                "android.permission.ACCESS_FINE_LOCATION",
+                "android.permission.ACCESS_COARSE_LOCATION",
+                "android.permission.READ_MEDIA_IMAGES",
+                "android.permission.CAMERA"
+            ],
+            "package": "com.climent.kifekoi"
+        },
+        "web": {
+            "bundler": "metro",
+            "output": "static",
+            "favicon": "./assets/images/kifekoi_logo.png"
+        },
+        "plugins": [
+            "expo-router",
+            [
+                "expo-splash-screen",
+                {
+                    "image": "./assets/images/kifekoi_logo.png",
+                    "imageWidth": 200,
+                    "resizeMode": "contain",
+                    "backgroundColor": "#ffffff"
+                }
+            ],
+            "expo-web-browser"
+        ],
+        "experiments": {
+            "typedRoutes": true
         }
-      ],
-      "expo-web-browser"
-    ],
-    "experiments": {
-      "typedRoutes": true
     }
-  }
 }

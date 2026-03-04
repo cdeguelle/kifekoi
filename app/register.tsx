@@ -81,7 +81,6 @@ export default function RegisterScreen() {
         const result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ["images"],
             allowsEditing: true,
-            aspect: [16, 9],
             quality: 0.8,
             base64: true,
         })
@@ -101,7 +100,6 @@ export default function RegisterScreen() {
 
         const result = await ImagePicker.launchCameraAsync({
             allowsEditing: true,
-            aspect: [16, 9],
             quality: 0.8,
             base64: true,
         })
@@ -127,7 +125,7 @@ export default function RegisterScreen() {
                         pickImage()
                         break
                 }
-            }
+            },
         )
     }
 
@@ -375,7 +373,7 @@ export default function RegisterScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#fff",
+        backgroundColor: "#F0FBF8",
         paddingBottom: Platform.OS === "android" ? 20 : 0,
     },
     scrollContent: {
@@ -402,75 +400,82 @@ const styles = StyleSheet.create({
     logo: {
         width: 100,
         height: 100,
-        marginBottom: 20,
+        marginBottom: 12,
     },
     title: {
-        fontSize: 28,
-        fontWeight: "bold",
-        marginBottom: 30,
-        color: "#333",
+        fontSize: 26,
+        fontWeight: "800",
+        marginBottom: 24,
+        color: "#1A2E2A",
+        letterSpacing: -0.5,
     },
     form: {
         width: "100%",
         maxWidth: 400,
     },
     input: {
-        backgroundColor: "#f5f5f5",
-        padding: 15,
-        borderRadius: 10,
-        marginBottom: 15,
-        fontSize: 16,
-        borderWidth: 1,
-        borderColor: "transparent",
+        backgroundColor: "#fff",
+        padding: 14,
+        borderRadius: 12,
+        marginBottom: 12,
+        fontSize: 15,
+        borderWidth: 1.5,
+        borderColor: "#C8EDE4",
+        color: "#1A2E2A",
     },
     inputError: {
-        borderColor: "#ff4444",
-        backgroundColor: "#fff5f5",
+        borderColor: "#FF3B30",
+        backgroundColor: "#FFF5F5",
     },
     textArea: {
-        height: 150,
+        height: 120,
         textAlignVertical: "top",
     },
     errorText: {
-        color: "#ff4444",
+        color: "#FF3B30",
         fontSize: 12,
-        marginBottom: 10,
-        marginTop: -10,
+        marginBottom: 8,
+        marginTop: -8,
     },
     button: {
-        backgroundColor: "#007AFF",
-        padding: 15,
-        borderRadius: 10,
+        backgroundColor: "#00C896",
+        padding: 16,
+        borderRadius: 14,
         alignItems: "center",
-        marginTop: 10,
+        marginTop: 8,
     },
     buttonDisabled: {
-        backgroundColor: "#ccc",
+        backgroundColor: "#A0C9BF",
     },
     buttonText: {
         color: "#fff",
-        fontSize: 18,
-        fontWeight: "600",
+        fontSize: 17,
+        fontWeight: "700",
+        letterSpacing: 0.3,
     },
     forgotPassword: {
-        marginTop: 15,
+        marginTop: 16,
         alignItems: "center",
     },
     forgotPasswordText: {
-        color: "#007AFF",
-        fontSize: 16,
+        color: "#00A87A",
+        fontSize: 15,
+        fontWeight: "500",
     },
     footer: {
         paddingHorizontal: 20,
-        gap: 16,
+        gap: 12,
     },
     imagePickerContainer: {
         width: "100%",
-        height: 200,
-        backgroundColor: "#f5f5f5",
-        borderRadius: 10,
+        height: 180,
+        backgroundColor: "#E0FBF4",
+        borderRadius: 14,
         overflow: "hidden",
-        marginBottom: 15,
+        marginBottom: 12,
+        borderWidth: 1.5,
+        borderColor: "#C8EDE4",
+        borderStyle: "dashed",
     },
     avatar: {
         width: "100%",
@@ -482,33 +487,35 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         padding: 20,
+        gap: 8,
     },
     avatarPlaceholderText: {
-        color: "#666",
+        color: "#6B8F87",
         textAlign: "center",
-        fontSize: 16,
+        fontSize: 14,
+        fontWeight: "500",
     },
     inputDate: {
-        backgroundColor: "#f5f5f5",
-        padding: 15,
-        borderRadius: 10,
-        marginBottom: 15,
-        fontSize: 16,
-        borderWidth: 1,
-        borderColor: "transparent",
+        backgroundColor: "#fff",
+        padding: 14,
+        borderRadius: 12,
+        marginBottom: 12,
+        fontSize: 15,
+        borderWidth: 1.5,
+        borderColor: "#C8EDE4",
         alignItems: "center",
         gap: 10,
         flexDirection: "row",
         justifyContent: "space-between",
     },
     label: {
-        color: "#666",
-        fontSize: 16,
+        color: "#6B8F87",
+        fontSize: 15,
     },
     dateText: {
-        color: "#333",
-        fontSize: 16,
-        fontWeight: "500",
+        color: "#1A2E2A",
+        fontSize: 15,
+        fontWeight: "600",
     },
     headerAndroid: {
         width: "100%",

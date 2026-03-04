@@ -9,14 +9,22 @@ export async function fetchData(url: string, method: Method, body?: BodyInit | n
 
     const fullUrl = `${API_URL}${url}`
 
+    console.log(fullUrl)
+
     const response = await fetch(fullUrl, {
         method,
         body: body,
         headers: {
             Authorization: `Bearer ${token}`,
+            ...(body ? { "Content-Type": "application/json" } : {}),
         },
         ...options,
     })
+
+    if (!response.ok) {
+        const errorData = await response.json().catch(() => ({ error: "Erreur serveur" }))
+        throw new Error(errorData.error || `Erreur ${response.status}`)
+    }
 
     return response
 }

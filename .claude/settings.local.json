@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(echo metro-config not found:*)",
+      "Bash(cd /c/Users/cleme/Documents/GitHub/kifekoi && node --print \"require.resolve\\('@react-native/gradle-plugin/package.json', { paths: [require.resolve\\('react-native/package.json'\\)] }\\)\" 2>&1)",
+      "Bash(echo $JAVA_HOME && java -version 2>&1)",
+      "Bash(where node 2>&1 && cmd.exe /c \"where node\" 2>&1)"
+    ]
+  }
+}

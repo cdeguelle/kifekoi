@@ -5,7 +5,7 @@ import { useGetToken } from "@/hooks/useGetToken"
 import { useActionSheet } from "@expo/react-native-action-sheet"
 import { useQuery } from "@tanstack/react-query"
 import React, { useEffect, useState } from "react"
-import { ActivityIndicator, FlatList, StyleSheet, TextInput, TouchableOpacity, View } from "react-native"
+import { ActivityIndicator, FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
 import { SafeAreaView } from "react-native-safe-area-context"
 
 export default function EventsScreen() {
@@ -49,16 +49,23 @@ export default function EventsScreen() {
     if (isLoading) {
         return (
             <View style={styles.loadingContainer}>
-                <ActivityIndicator size="large" color="#0000ff" />
+                <ActivityIndicator size="large" color="#00C896" />
             </View>
         )
     }
 
     return (
         <SafeAreaView style={styles.container}>
+            <Text style={styles.screenTitle}>Événements</Text>
             <View style={styles.searchContainer}>
-                <TextInput style={styles.searchInput} placeholder="Rechercher un événement..." onChangeText={(text) => setSearchQuery(text)} />
+                <TextInput
+                    style={styles.searchInput}
+                    placeholder="Rechercher un événement..."
+                    placeholderTextColor="#6B8F87"
+                    onChangeText={(text) => setSearchQuery(text)}
+                />
                 <TouchableOpacity
+                    style={styles.filterButton}
                     onPress={() =>
                         showActionSheetWithOptions(
                             {
@@ -78,7 +85,7 @@ export default function EventsScreen() {
                         )
                     }
                 >
-                    <IconSymbol name="line.3.horizontal.decrease.circle.fill" size={40} color="#0000ff" />
+                    <IconSymbol name="line.3.horizontal.decrease.circle.fill" size={28} color="#00C896" />
                 </TouchableOpacity>
             </View>
             <FlatList
@@ -94,26 +101,45 @@ export default function EventsScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#fff",
+        backgroundColor: "#F0FBF8",
         padding: 16,
     },
     loadingContainer: {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
+        backgroundColor: "#F0FBF8",
+    },
+    screenTitle: {
+        fontSize: 26,
+        fontWeight: "800",
+        color: "#1A2E2A",
+        marginBottom: 16,
+        letterSpacing: -0.5,
     },
     searchContainer: {
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        marginBottom: 15,
+        marginBottom: 16,
+        gap: 10,
     },
     searchInput: {
-        backgroundColor: "#f5f5f5",
-        padding: 15,
-        borderRadius: 10,
-        fontSize: 16,
-        width: "80%",
+        flex: 1,
+        backgroundColor: "#fff",
+        padding: 13,
+        borderRadius: 14,
+        fontSize: 15,
+        borderWidth: 1.5,
+        borderColor: "#C8EDE4",
+        color: "#1A2E2A",
+    },
+    filterButton: {
+        backgroundColor: "#fff",
+        padding: 10,
+        borderRadius: 14,
+        borderWidth: 1.5,
+        borderColor: "#C8EDE4",
     },
     listContainer: {
         paddingBottom: 32,

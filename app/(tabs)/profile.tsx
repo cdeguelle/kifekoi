@@ -23,31 +23,38 @@ export default function ProfileScreen() {
 
     return (
         <ThemedView style={styles.container}>
-            <Image source={{ uri: data?.avatar ?? "" }} style={styles.avatar} />
-            <TouchableOpacity
-                onPress={() => {
-                    logout()
-                    router.replace("/login")
-                }}
-                style={styles.logoutButton}
-            >
-                <IconSymbol name="power" size={20} color="red" />
-                <Text style={styles.logoutButtonText}>Déconnexion</Text>
-            </TouchableOpacity>
+            <View style={styles.headerBanner}>
+                <TouchableOpacity
+                    onPress={() => {
+                        logout()
+                        router.replace("/login")
+                    }}
+                    style={styles.logoutButton}
+                >
+                    <IconSymbol name="power" size={18} color="#fff" />
+                    <Text style={styles.logoutButtonText}>Déconnexion</Text>
+                </TouchableOpacity>
+                <Text style={styles.headerName}>
+                    {data?.firstname} {data?.lastname}
+                </Text>
+            </View>
+            <View style={styles.avatarWrapper}>
+                <Image source={{ uri: data?.avatar ?? "" }} style={styles.avatar} />
+            </View>
             <ScrollView style={styles.scrollView}>
                 <View style={styles.row}>
                     <View style={styles.column}>
-                        <Text>Prénom</Text>
+                        <Text style={styles.fieldLabel}>Prénom</Text>
                         <TextInput style={styles.input} value={data?.firstname} editable={false} />
                     </View>
                     <View style={styles.column}>
-                        <Text>Nom</Text>
+                        <Text style={styles.fieldLabel}>Nom</Text>
                         <TextInput style={styles.input} value={data?.lastname} editable={false} />
                     </View>
                 </View>
                 <View style={styles.row}>
                     <View style={styles.column}>
-                        <Text>Nationalité</Text>
+                        <Text style={styles.fieldLabel}>Nationalité</Text>
                         <View style={[styles.input, { flexDirection: "row", alignItems: "center", gap: 10, paddingVertical: 7 }]}>
                             <CountryPicker
                                 {...{
@@ -68,16 +75,16 @@ export default function ProfileScreen() {
                     </View>
 
                     <View style={styles.column}>
-                        <Text>Date de naissance</Text>
+                        <Text style={styles.fieldLabel}>Date de naissance</Text>
                         <TextInput style={styles.input} value={data?.birthdate ? new Date(data.birthdate).toLocaleDateString() : ""} editable={false} />
                     </View>
                 </View>
                 <View style={[styles.column, { width: "100%" }]}>
-                    <Text>Email</Text>
+                    <Text style={styles.fieldLabel}>Email</Text>
                     <TextInput style={styles.input} value={data?.email} editable={false} />
                 </View>
                 <View style={styles.textArea}>
-                    <Text>Bio</Text>
+                    <Text style={styles.fieldLabel}>Bio</Text>
                     <TextInput style={styles.input} multiline={true} numberOfLines={4} value={data?.bio ?? undefined} editable={false} />
                 </View>
                 <View style={styles.divider} />
@@ -95,7 +102,7 @@ export default function ProfileScreen() {
                     <Text style={styles.sectionTitle}>Support & Aide</Text>
                     <TouchableOpacity style={styles.bugReportButton} onPress={() => router.push("/bug-report")}>
                         <IconSymbol name="exclamationmark.triangle.fill" size={20} color="#FF9500" />
-                        <Text style={styles.bugReportButtonText}>🐛 Signaler un problème</Text>
+                        <Text style={styles.bugReportButtonText}>Signaler un problème</Text>
                         <IconSymbol name="chevron.right" size={16} color="#666" />
                     </TouchableOpacity>
                 </View>
@@ -105,37 +112,77 @@ export default function ProfileScreen() {
 }
 
 const styles = StyleSheet.create({
-    scrollView: {
-        backgroundColor: "#fff",
-        paddingTop: 25,
-        marginBottom: 100,
-    },
     container: {
-        justifyContent: "center",
-        padding: 16,
-        gap: 10,
+        flex: 1,
+        backgroundColor: "#F0FBF8",
     },
     loadingContainer: {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
+        backgroundColor: "#F0FBF8",
+    },
+    headerBanner: {
+        backgroundColor: "#00C896",
+        height: 140,
+        paddingHorizontal: 20,
+        paddingTop: 50,
+        justifyContent: "flex-end",
+        paddingBottom: 16,
+    },
+    headerName: {
+        color: "#fff",
+        fontSize: 20,
+        fontWeight: "700",
+        letterSpacing: -0.3,
+    },
+    logoutButton: {
+        position: "absolute",
+        top: 50,
+        right: 20,
+        flexDirection: "row",
+        alignItems: "center",
+        gap: 6,
+        backgroundColor: "rgba(255,255,255,0.2)",
+        paddingHorizontal: 12,
+        paddingVertical: 6,
+        borderRadius: 20,
+    },
+    logoutButtonText: {
+        color: "#fff",
+        fontSize: 12,
+        fontWeight: "600",
+    },
+    avatarWrapper: {
+        alignItems: "center",
+        marginTop: -44,
+        marginBottom: 8,
     },
     avatar: {
-        width: 100,
-        height: 100,
-        borderRadius: 50,
-        alignSelf: "center",
-        marginTop: "15%",
+        width: 88,
+        height: 88,
+        borderRadius: 44,
+        borderWidth: 3,
+        borderColor: "#fff",
+        backgroundColor: "#C8EDE4",
+    },
+    scrollView: {
+        backgroundColor: "#F0FBF8",
+        paddingTop: 8,
+        paddingHorizontal: 16,
+        marginBottom: 100,
     },
     input: {
-        backgroundColor: "#f5f5f5",
-        padding: 15,
-        borderRadius: 10,
-        marginBottom: 15,
-        fontSize: 16,
+        backgroundColor: "#fff",
+        padding: 13,
+        borderRadius: 12,
+        marginBottom: 12,
+        fontSize: 15,
+        borderWidth: 1.5,
+        borderColor: "#C8EDE4",
+        color: "#1A2E2A",
     },
     row: {
-        display: "flex",
         flexDirection: "row",
         gap: 10,
         justifyContent: "space-between",
@@ -143,49 +190,41 @@ const styles = StyleSheet.create({
         width: "100%",
     },
     column: {
-        display: "flex",
         flexDirection: "column",
-        gap: 10,
+        gap: 6,
         width: "45%",
     },
     textArea: {
-        display: "flex",
         flexDirection: "column",
-        gap: 10,
+        gap: 6,
         width: "100%",
     },
+    fieldLabel: {
+        fontSize: 12,
+        fontWeight: "600",
+        color: "#6B8F87",
+        textTransform: "uppercase",
+        letterSpacing: 0.5,
+        marginBottom: 2,
+    },
     friendsButton: {
-        backgroundColor: "#000",
-        padding: 15,
-        borderRadius: 10,
+        backgroundColor: "#00C896",
+        padding: 14,
+        borderRadius: 14,
         width: "45%",
         alignItems: "center",
     },
     friendsButtonText: {
         color: "#fff",
         fontSize: 14,
-        fontWeight: "bold",
-    },
-    logoutButton: {
-        position: "absolute",
-        top: 60,
-        left: 20,
-        flexDirection: "row",
-        alignItems: "center",
-        gap: 10,
-    },
-    logoutButtonText: {
-        color: "red",
-        fontSize: 10,
-        fontWeight: "bold",
+        fontWeight: "700",
     },
     divider: {
         height: 1,
-        backgroundColor: "#eee",
-        marginVertical: 5,
+        backgroundColor: "#C8EDE4",
+        marginVertical: 8,
     },
     buttonContainer: {
-        display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
         gap: 10,
@@ -197,25 +236,25 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     sectionTitle: {
-        fontSize: 18,
-        fontWeight: "600",
-        marginBottom: 15,
-        color: "#333",
+        fontSize: 16,
+        fontWeight: "700",
+        marginBottom: 12,
+        color: "#1A2E2A",
     },
     bugReportButton: {
         flexDirection: "row",
         alignItems: "center",
-        backgroundColor: "#f8f9fa",
+        backgroundColor: "#fff",
         padding: 15,
-        borderRadius: 10,
-        borderWidth: 1,
-        borderColor: "#e9ecef",
+        borderRadius: 14,
+        borderWidth: 1.5,
+        borderColor: "#C8EDE4",
     },
     bugReportButtonText: {
         flex: 1,
         marginLeft: 10,
-        fontSize: 16,
-        color: "#333",
+        fontSize: 15,
+        color: "#1A2E2A",
         fontWeight: "500",
     },
 })

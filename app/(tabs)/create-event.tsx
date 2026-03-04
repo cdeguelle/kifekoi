@@ -29,7 +29,13 @@ const schema = yup.object().shape({
     description: yup.string().required("La description est requise"),
     type: yup.mixed<EventType>().oneOf(Object.values(EventType)).required("Le type est requis"),
     startDate: yup.date().required("La date de début est requise"),
-    endDate: yup.date().required("La date de fin est requise").min(yup.ref("startDate"), "La date de fin doit être après la date de début"),
+    endDate: yup
+        .date()
+        .required("La date de fin est requise")
+        .test("after-start", "La date de fin doit être après la date de début", function (value) {
+            const { startDate } = this.parent
+            return value !== undefined && startDate !== undefined && value > startDate
+        }),
     address: yup.object().shape({
         number: yup.string().required(),
         street: yup.string().required(),
@@ -85,7 +91,7 @@ export default function CreateEventScreen() {
             description: type === "update" ? event?.description : "",
             type: type === "update" ? event?.type : EventType.OTHER,
             startDate: type === "update" ? new Date(event?.startDate!) : new Date(),
-            endDate: type === "update" ? new Date(event?.endDate!) : new Date(),
+            endDate: type === "update" ? new Date(event?.endDate!) : new Date(Date.now() + 60 * 60 * 1000),
             coverImage: type === "update" ? event?.coverImage : "",
             address: {
                 number: type === "update" ? event?.address.number : "",
@@ -111,7 +117,7 @@ export default function CreateEventScreen() {
                 fetch(
                     `https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(addressQuery)}&limit=5&lat=${lastLocationStored?.latitude}&lon=${
                         lastLocationStored?.longitude
-                    }`
+                    }`,
                 )
                     .then((res) => res.json())
                     .then(
@@ -125,9 +131,9 @@ export default function CreateEventScreen() {
                                     country: "France",
                                     latitude: f.geometry.coordinates[1],
                                     longitude: f.geometry.coordinates[0],
-                                }))
+                                })),
                             )
-                        }
+                        },
                     )
                     .catch(() => {})
             } catch {
@@ -184,6 +190,9 @@ export default function CreateEventScreen() {
             router.back()
             Toast.success("L'événement a été créé avec succès !")
         },
+        onError: (error: Error) => {
+            Toast.error(error.message || "Erreur lors de la création de l'événement")
+        },
     })
 
     const { mutate: updateEventMutation, isPending: isUpdating } = useMutation({
@@ -193,6 +202,9 @@ export default function CreateEventScreen() {
             reset()
             router.back()
             Toast.success("L'événement a été modifié avec succès !")
+        },
+        onError: (error: Error) => {
+            Toast.error(error.message || "Erreur lors de la modification de l'événement")
         },
     })
 
@@ -271,7 +283,6 @@ export default function CreateEventScreen() {
         const result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ["images"],
             allowsEditing: true,
-            aspect: [16, 9],
             quality: 0.8,
             base64: true,
         })
@@ -291,7 +302,6 @@ export default function CreateEventScreen() {
 
         const result = await ImagePicker.launchCameraAsync({
             allowsEditing: true,
-            aspect: [16, 9],
             quality: 0.8,
             base64: true,
         })
@@ -317,7 +327,7 @@ export default function CreateEventScreen() {
                         pickImage()
                         break
                 }
-            }
+            },
         )
     }
 
@@ -335,8 +345,8 @@ export default function CreateEventScreen() {
 
     if (!lastLocationStored) {
         return (
-            <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-                <ActivityIndicator size="large" color="#007AFF" />
+            <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#F0FBF8" }}>
+                <ActivityIndicator size="large" color="#00C896" />
             </View>
         )
     }
@@ -397,7 +407,7 @@ export default function CreateEventScreen() {
                                                 if (selectedIndex !== undefined && selectedIndex < EventTypes.length) {
                                                     onChange(EventTypes[selectedIndex].value)
                                                 }
-                                            }
+                                            },
                                         )
                                     }}
                                 >
@@ -515,15 +525,15 @@ export default function CreateEventScreen() {
                                                                         lastLocationStored.latitude,
                                                                         lastLocationStored.longitude,
                                                                         suggestion.latitude,
-                                                                        suggestion.longitude
-                                                                    ) * 1000
+                                                                        suggestion.longitude,
+                                                                    ) * 1000,
                                                                 )}{" "}
                                                                 m
                                                             </Text>
                                                         )}
                                                     </View>
                                                 </TouchableOpacity>
-                                            )
+                                            ),
                                     )}
                             </View>
                         )}
@@ -566,7 +576,8 @@ export default function CreateEventScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#fff",
+        backgroundColor: "#F0FBF8",
+        paddingTop: 50,
     },
     scrollContainer: {
         padding: 16,
@@ -575,70 +586,84 @@ const styles = StyleSheet.create({
     title: {
         textAlign: "center",
         fontSize: 24,
-        fontWeight: "bold",
+        fontWeight: "800",
         marginBottom: 24,
+        color: "#1A2E2A",
+        letterSpacing: -0.5,
     },
     formGroup: {
-        marginBottom: 16,
+        marginBottom: 14,
     },
     label: {
-        fontSize: 16,
-        marginBottom: 8,
-        color: "#333",
+        fontSize: 12,
+        fontWeight: "600",
+        color: "#6B8F87",
+        textTransform: "uppercase",
+        letterSpacing: 0.5,
+        marginBottom: 6,
     },
     input: {
-        backgroundColor: "#f5f5f5",
-        padding: 15,
-        borderRadius: 10,
-        marginBottom: 15,
-        fontSize: 16,
+        backgroundColor: "#fff",
+        padding: 14,
+        borderRadius: 12,
+        marginBottom: 4,
+        fontSize: 15,
+        borderWidth: 1.5,
+        borderColor: "#C8EDE4",
+        color: "#1A2E2A",
     },
     inputError: {
-        borderWidth: 1,
-        borderColor: "#ff3b30",
+        borderColor: "#FF3B30",
+        backgroundColor: "#FFF5F5",
     },
     errorText: {
-        color: "#ff3b30",
-        fontSize: 14,
-        marginTop: -10,
-        marginBottom: 10,
+        color: "#FF3B30",
+        fontSize: 13,
+        marginTop: 4,
+        marginBottom: 6,
     },
     textArea: {
         height: 100,
         textAlignVertical: "top",
     },
     selectContainer: {
-        backgroundColor: "#f5f5f5",
-        borderRadius: 10,
-        padding: 15,
-        marginBottom: 15,
+        backgroundColor: "#fff",
+        borderRadius: 12,
+        padding: 14,
+        marginBottom: 4,
+        borderWidth: 1.5,
+        borderColor: "#C8EDE4",
     },
     selectText: {
-        fontSize: 16,
-        color: "#333",
+        fontSize: 15,
+        color: "#1A2E2A",
     },
     submitButton: {
-        backgroundColor: "#007AFF",
+        backgroundColor: "#00C896",
         padding: 16,
-        borderRadius: 8,
+        borderRadius: 14,
         alignItems: "center",
         marginTop: 24,
     },
     submitButtonText: {
         color: "#fff",
         fontSize: 16,
-        fontWeight: "bold",
+        fontWeight: "700",
+        letterSpacing: 0.3,
     },
     submitButtonDisabled: {
-        opacity: 0.7,
+        opacity: 0.6,
     },
     imagePickerContainer: {
         width: "100%",
-        height: 200,
-        backgroundColor: "#f5f5f5",
-        borderRadius: 10,
+        height: 180,
+        backgroundColor: "#E0FBF4",
+        borderRadius: 14,
         overflow: "hidden",
-        marginBottom: 15,
+        marginBottom: 4,
+        borderWidth: 1.5,
+        borderColor: "#C8EDE4",
+        borderStyle: "dashed",
     },
     coverImage: {
         width: "100%",
@@ -650,11 +675,13 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         padding: 20,
+        gap: 8,
     },
     placeholderText: {
-        color: "#666",
+        color: "#6B8F87",
         textAlign: "center",
-        fontSize: 16,
+        fontSize: 14,
+        fontWeight: "500",
     },
     addressContainer: {
         position: "relative",
@@ -666,22 +693,21 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         backgroundColor: "#fff",
-        borderRadius: 10,
-        marginTop: 5,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
+        borderRadius: 12,
+        marginTop: 4,
+        shadowColor: "#00C896",
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.12,
+        shadowRadius: 10,
         elevation: 5,
         maxHeight: 200,
+        borderWidth: 1,
+        borderColor: "#C8EDE4",
     },
     suggestionItem: {
-        padding: 15,
+        padding: 13,
         borderBottomWidth: 1,
-        borderBottomColor: "#f0f0f0",
+        borderBottomColor: "#E0FBF4",
     },
     suggestionContent: {
         flexDirection: "row",
@@ -690,12 +716,13 @@ const styles = StyleSheet.create({
     },
     suggestionText: {
         fontSize: 14,
-        color: "#333",
+        color: "#1A2E2A",
         flex: 1,
     },
     distanceText: {
         fontSize: 12,
-        color: "#666",
+        color: "#00C896",
+        fontWeight: "600",
         marginLeft: 10,
     },
     suggestionsLoading: {
@@ -704,15 +731,16 @@ const styles = StyleSheet.create({
         top: 15,
     },
     inputDate: {
-        backgroundColor: "#f5f5f5",
-        padding: 15,
-        borderRadius: 10,
-        marginBottom: 15,
-        fontSize: 16,
+        backgroundColor: "#fff",
+        padding: 14,
+        borderRadius: 12,
+        marginBottom: 4,
+        borderWidth: 1.5,
+        borderColor: "#C8EDE4",
     },
     dateText: {
-        color: "#333",
-        fontSize: 16,
-        fontWeight: "500",
+        color: "#1A2E2A",
+        fontSize: 15,
+        fontWeight: "600",
     },
 })
