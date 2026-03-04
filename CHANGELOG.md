@@ -7,6 +7,14 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/lang/fr/).
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-03-04
+
+- - 💄 new style
+- - refactor: ♻️ clean code
+- - 📝 Update README
+- - :bug: Fix android ui issues
+
+
 ## [1.2.0] - 2025-08-13
 
 - - feat: bug report form
